@@ -1,21 +1,16 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'mvn3916'
-        jdk 'jdk8'
-    }
-
     environment {
         BUILD_VERSION = '1'
-        ARTEFACT_NAME = "${WORKSPACE}/target/WebGoat-${BUILD_VERSION}.war"
         IQ_SCAN_URL = ''
     }
 
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -Dproject.version=$BUILD_VERSION -Dmaven.test.failure.ignore=true clean package'
+                sh 'chmod +x mvnw'
+                sh './mvnw -B -Dproject.version=$BUILD_VERSION -Dmaven.test.failure.ignore=true clean package'
             }
 
             post {
